@@ -29,6 +29,7 @@
 # (ollama.override { acceleration = "cuda"; })
 
 # CLI tools
+		github-cli
 		eza
 		bat
 		btop

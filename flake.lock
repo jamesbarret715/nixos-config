@@ -28,11 +28,11 @@
     "dwl-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1772447940,
+        "lastModified": 1772479424,
         "narHash": "sha256-v9VTNlwPO4mbgg1n6WcGpUD+yKev46wVgjQJYTJErQ4=",
         "owner": "jamesbarret715",
         "repo": "dwl",
-        "rev": "d64ce61d0386a261f4e9b3c699056a51418a8b5b",
+        "rev": "be3e19d922f4ccd63a79723d691e49c31e019c7c",
         "type": "github"
       },
       "original": {
