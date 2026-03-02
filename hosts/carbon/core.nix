@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }: {
+{ lib, pkgs, inputs, ... }: {
 	imports = [
 		./hardware-configuration.nix
 		./nvidia.nix
@@ -6,15 +6,14 @@
 		../../modules/bluetooth.nix
 		../../modules/pipewire.nix
 		../../modules/virtualisation.nix
-		../../modules/gaming.nix
-		../../modules/network.nix
+		../../modules/game.nix
 	];
 
 	boot = {
 		loader.systemd-boot.enable = true;
 		loader.efi.canTouchEfiVariables = true;
 # CachyOS kernel with BORE scheduler
-		kernelPackages = pkgs.linuxPackages_cachyos;
+# kernelPackages = pkgs.linuxPackages_cachyos;
 # Kernel parameters for Nvidia + Intel hybrid
 		kernelParams = [ "i915.force_probe=7d55" "nvidia_drm.modeset=1" "nvidia_drm.fbdev=1" ];
 		initrd.kernelModules = [ "i915" ];
@@ -23,8 +22,11 @@
 	networking = {
 		hostName = "carbon";
 		networkmanager.enable = true;
-# Wireguard via sops - config lives in secrets
-		wg-quick.interfaces = {};  # populated per-secret in network.nix
+	};
+
+	fileSystems = {
+		"/".device = lib.mkForce "/dev/disk/by-partlabel/disk-main-root";
+		"/boot".device = lib.mkForce "/dev/disk/by-partlabel/disk-main-boot";
 	};
 
 	time.timeZone = "Europe/London";
@@ -59,19 +61,10 @@
 					 extraBuildFlags = [ "-O3" "-march=native" "-mtune=native" ];
 				 };
 			 };
-
-			 ffmpeg = prev.ffmpeg.override { stdenv = final.optimisedStdenv };
-			 wlroots = prev.wlroots.override { stdenv = final.optimisedStdenv };
 		 })
 	];
 
 	nixpkgs.config.allowUnfree = true;
-
-# SOPS
-	sops = {
-		defaultSopsFile = ../../secrets/secrets.yaml;
-		age.keyFile = "/home/james/.config/sops/age/keys.txt";
-	};
 
 	users.users.james = {
 		isNormalUser = true;

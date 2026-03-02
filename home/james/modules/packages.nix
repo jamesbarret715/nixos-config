@@ -6,21 +6,17 @@
 
 # Productivity
 		obsidian
-		onlyoffice-bin
-		bitwarden
+		bitwarden-desktop
 
 # Media
 		mpv
 		handbrake
 		blender
-		davinci-resolve  # unfree
-		reaper
 
 # Dev tools
 		gcc
 		gnumake
 		nodejs
-		npm
 		uv
 		python3
 		arduino-cli
@@ -28,7 +24,7 @@
 		odin
 
 # Ollama with CUDA
-		(ollama.override { acceleration = "cuda"; })
+# (ollama.override { acceleration = "cuda"; })
 
 # CLI tools
 		btop
@@ -46,15 +42,10 @@
 
 # Fonts
 		nerd-fonts.jetbrains-mono
-		noto-fonts
-		noto-fonts-cjk
-		noto-fonts-emoji
 
 # System tools
-		nvtop
 		pavucontrol
 		brightnessctl
-		wiremix
 
 # Gaming
 		mangohud
@@ -62,8 +53,6 @@
 		winetricks
 
 # Creative
-		freecad
-
 # Network
 		wget
 		curl
