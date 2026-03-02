@@ -1,4 +1,4 @@
-{ pkgs, inputs, dwl-src, scripts-src, ... }: {
+{ pkgs, inputs, dwl-src, ... }: {
 	imports = [
 		./modules/dwl.nix
 		./modules/fish.nix

@@ -25,17 +25,12 @@
 			url = "github:jamesbarret715/dwl";
 			flake = false;
 		};
-
-		scripts-src = {
-			url = "github:jamesbarret715/scripts"; 
-			flake = false;
-		};
 	};
 
-	outputs = { self, nixpkgs, home-manager, sops-nix, chaotic, dwl-src, scripts-src, ... }@inputs: {
+	outputs = { self, nixpkgs, home-manager, sops-nix, chaotic, dwl-src, ... }@inputs: {
 		nixosConfigurations.carbon = nixpkgs.lib.nixosSystem {
 			system = "x86_64-linux";
-			specialArgs = { inherit inputs dwl-src scripts-src; };
+			specialArgs = { inherit inputs dwl-src; };
 			modules = [
 				./hosts/carbon/core.nix
 
@@ -47,7 +42,7 @@
 				{
 					home-manager.useGlobalPkgs = true;
 					home-manager.useUserPackages = true;
-					home-manager.extraSpecialArgs = { inherit inputs dwl-src scripts-src; };
+					home-manager.extraSpecialArgs = { inherit inputs dwl-src; };
 					home-manager.users.james = import ./home/james;
 				}
 			];
