@@ -5,6 +5,8 @@
 		chromium
 
 # Productivity
+		foot
+		neovim
 		obsidian
 		bitwarden-desktop
 
@@ -27,6 +29,8 @@
 # (ollama.override { acceleration = "cuda"; })
 
 # CLI tools
+		eza
+		bat
 		btop
 		ripgrep
 		just

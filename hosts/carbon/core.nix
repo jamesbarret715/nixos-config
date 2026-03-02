@@ -26,7 +26,7 @@
 
 	fileSystems = {
 		"/".device = lib.mkForce "/dev/disk/by-partlabel/disk-main-root";
-		"/boot".device = lib.mkForce "/dev/disk/by-partlabel/disk-main-boot";
+		"/boot".device = lib.mkForce "/dev/disk/by-partlabel/disk-main-ESP";
 	};
 
 	time.timeZone = "Europe/London";
