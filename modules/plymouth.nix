@@ -1,8 +1,12 @@
 { ... }: {
+# Enable plymouth
 	boot.plymouth = {
 		enable = true;
 		theme = "spinner";
+	};
 
+# Additional boot params
+	boot = {
 		initrd.verbose = false;
 		kernelParams = [
 			"quiet"
