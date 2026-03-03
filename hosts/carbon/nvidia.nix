@@ -6,8 +6,8 @@
 		modesetting.enable = true;
 		powerManagement.enable = true;
 		powerManagement.finegrained = true;   # fine-grained power management (RTX)
-			open = false;                     # proprietary, not open kernel module
-			nvidiaSettings = true;
+		open = false;                     # proprietary, not open kernel module
+		nvidiaSettings = true;
 		package = config.boot.kernelPackages.nvidiaPackages.stable;
 
 		prime = {
@@ -15,7 +15,7 @@
 				enable = true;
 				enableOffloadCmd = true;   # gives you `nvidia-offload` command
 			};
-# Bus IDs from lspci: 00:02.0 = Intel, 01:00.0 = Nvidia
+
 			intelBusId = "PCI:0:2:0";
 			nvidiaBusId = "PCI:1:0:0";
 		};
@@ -27,8 +27,8 @@
 		enable32Bit = true;
 		extraPackages = with pkgs; [
 			intel-media-driver    # VAAPI for Intel Arc
-				vpl-gpu-rt            # Intel VPL (video processing)
-				nvidia-vaapi-driver   # VAAPI bridge for Nvidia when offloading
+			vpl-gpu-rt            # Intel VPL (video processing)
+			nvidia-vaapi-driver   # VAAPI bridge for Nvidia when offloading
 		];
 		extraPackages32 = with pkgs; [
 			pkgs.driversi686Linux.intel-media-driver
@@ -39,6 +39,7 @@
 # Use Intel for display, Nvidia only on request
 		WLR_DRM_DEVICES = "/dev/dri/card1";   # Intel Arc is card1
 		LIBVA_DRIVER_NAME = "iHD";            # Intel VAAPI
+
 # Tell apps where to find Nvidia for offload
 		__NV_PRIME_RENDER_OFFLOAD = "1";
 		__VK_LAYER_NV_optimus = "NVIDIA_only";

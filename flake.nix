@@ -9,32 +9,26 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
+# Change nvim version to nightly
 		neovim-nightly-overlay = {
 			url = "github:nix-community/neovim-nightly-overlay";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
-# CachyOS kernel + optimised packages
-		chaotic = {
-			url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
-			inputs.nixpkgs.follows = "nixpkgs";
-		};
-
-# My custom software
+# Use my dwl build
 		dwl-src = {
 			url = "github:jamesbarret715/dwl";
 			flake = false;
 		};
 	};
 
-	outputs = { self, nixpkgs, home-manager, neovim-nightly-overlay, chaotic, dwl-src, ... }@inputs: {
+	outputs = { self, nixpkgs, home-manager, neovim-nightly-overlay, dwl-src, ... } @ inputs: {
 		nixosConfigurations.carbon = nixpkgs.lib.nixosSystem {
 			system = "x86_64-linux";
-			specialArgs = { inherit inputs dwl-src; };
+			specialArgs = { inherit inputs; };
 			modules = [
 				./hosts/carbon/core.nix
 
-				chaotic.nixosModules.default
 				home-manager.nixosModules.home-manager
 
 				{

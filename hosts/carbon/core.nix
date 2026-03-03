@@ -3,22 +3,19 @@
 		./hardware-configuration.nix
 		./nvidia.nix
 
-		../../modules/bluetooth.nix
-		../../modules/game.nix
-		../../modules/howdy.nix
-		../../modules/network.nix
-		../../modules/pipewire.nix
-		../../modules/virtualisation.nix
+		../../modules/bluetooth.nix 
+		../../modules/game.nix # Options/packages useful for gaming
+		../../modules/howdy.nix # Windows Hello facial recognition
+		../../modules/network.nix 
+		../../modules/pipewire.nix 
+		../../modules/virtualisation.nix # Options/packages useful for QEMU/KVM virtualisation
 	];
 
 	boot = {
 		loader.systemd-boot.enable = true;
 		loader.efi.canTouchEfiVariables = true;
 
-# CachyOS kernel with BORE scheduler
-		kernelPackages = pkgs.linuxPackages_cachyos;
-
-# Kernel parameters for Nvidia + Intel hybrid
+		kernelPackages = pkgs.linuxPackages_zen; # zen kernel uses BORE scheduler
 		kernelParams = [ "i915.force_probe=7d55" "nvidia_drm.modeset=1" "nvidia_drm.fbdev=1" ];
 		initrd.kernelModules = [ "i915" ];
 
@@ -26,49 +23,30 @@
 		resumeDevice = lib.mkForce "/dev/disk/by-partlabel/disk-main-swap";
 	};
 
-	networking.hostName = "carbon";
-
+# Manually specify filesystem locations based on partition label
 	fileSystems = {
 		"/".device = lib.mkForce "/dev/disk/by-partlabel/disk-main-root";
 		"/boot".device = lib.mkForce "/dev/disk/by-partlabel/disk-main-ESP";
 	};
 
+# Basic system settings
+	networking.hostName = "carbon";
 	time.timeZone = "Europe/London";
 	i18n.defaultLocale = "en_GB.UTF-8";
 
-# Nix settings
 	nix.settings = {
 		experimental-features = [ "nix-command" "flakes" ];
 		auto-optimise-store = true;
 		substituters = [
 			"https://cache.nixos.org"
-			"https://nyx.chaotic.cx"
 			"https://nix-gaming.cachix.org"
 			"https://cuda-maintainers.cachix.org"
 		];
 		trusted-public-keys = [
-			"cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-			"nyx.chaotic.cx-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="
-			"chaotic-nyx.cachix.org-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="
 			"nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
 			"cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
 		];
 	};
-
-# Selective -O3 / -march=native via overlay (kernel + stdenv)
-# Applied only to packages that benefit — not globally to avoid cache misses
-	nixpkgs.overlays = [
-		(final: prev: {
-# Optimised stdenv for manual use in specific packages
-			 optimisedStdenv = prev.stdenv.override {
-				 cc = prev.stdenv.cc.override {
-					 extraBuildFlags = [ "-O3" "-march=native" "-mtune=native" ];
-				 };
-			 };
-
-			 ffmpeg = prev.ffmpeg.override { stdenv = final.optimisedStdenv; };
-		 })
-	];
 
 	nixpkgs.config.allowUnfree = true;
 
@@ -84,7 +62,7 @@
 	];
 
 	programs.fish.enable = true;
-	programs.dconf.enable = true;   # needed for virt-manager
+	programs.dconf.enable = true; # needed for virt-manager
 
 # XDG portals for Wayland
 	xdg.portal = {
@@ -95,10 +73,11 @@
 
 	services = {
 		udev.packages = [ pkgs.libinput ];
-		logind.lidSwitch = "suspend";
+		logind.settings.Login.HandleLidSwitch = "suspend";
 		fwupd.enable = true;
 		upower.enable = true;
 		gnome.gnome-keyring.enable = true;
+		dbus.implementation = "broker";
 	};
 
 	security = {

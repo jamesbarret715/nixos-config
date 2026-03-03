@@ -1,4 +1,5 @@
 { pkgs, ... }: {
+# Enable libvirt KVM with QEMU
 	virtualisation = {
 		libvirtd = {
 			enable = true;
@@ -10,6 +11,7 @@
 		};
 	};
 
+# Useful packages
 	environment.systemPackages = with pkgs; [
 		virt-manager
 		virt-viewer

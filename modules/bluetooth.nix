@@ -4,5 +4,6 @@
 		powerOnBoot = true;
 		settings.Policy.AutoEnable = "true";
 	};
+
 	services.blueman.enable = true;
 }
