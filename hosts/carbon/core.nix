@@ -8,6 +8,7 @@
 		../../modules/howdy.nix # Windows Hello facial recognition
 		../../modules/network.nix 
 		../../modules/pipewire.nix 
+		../../modules/plymouth.nix # Splash screen at boot
 		../../modules/virtualisation.nix # Options/packages useful for QEMU/KVM virtualisation
 	];
 
