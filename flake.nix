@@ -9,6 +9,10 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
+		neovim-nightly-overlay = {
+			url = "github:nix-community/neovim-nightly-overlay";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
 
 # CachyOS kernel + optimised packages
 		chaotic = {
@@ -23,7 +27,7 @@
 		};
 	};
 
-	outputs = { self, nixpkgs, home-manager, sops-nix, chaotic, dwl-src, ... }@inputs: {
+	outputs = { self, nixpkgs, home-manager, neovim-nightly-overlay, chaotic, dwl-src, ... }@inputs: {
 		nixosConfigurations.carbon = nixpkgs.lib.nixosSystem {
 			system = "x86_64-linux";
 			specialArgs = { inherit inputs dwl-src; };
@@ -31,11 +35,11 @@
 				./hosts/carbon/core.nix
 
 				chaotic.nixosModules.default
-				sops-nix.nixosModules.sops
 				home-manager.nixosModules.home-manager
 
-
 				{
+					nixpkgs.overlays = [ neovim-nightly-overlay.overlays.default ];
+
 					home-manager.useGlobalPkgs = true;
 					home-manager.useUserPackages = true;
 					home-manager.extraSpecialArgs = { inherit inputs dwl-src; };

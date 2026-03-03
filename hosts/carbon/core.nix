@@ -4,25 +4,29 @@
 		./nvidia.nix
 
 		../../modules/bluetooth.nix
+		../../modules/game.nix
+		../../modules/howdy.nix
+		../../modules/network.nix
 		../../modules/pipewire.nix
 		../../modules/virtualisation.nix
-		../../modules/game.nix
 	];
 
 	boot = {
 		loader.systemd-boot.enable = true;
 		loader.efi.canTouchEfiVariables = true;
+
 # CachyOS kernel with BORE scheduler
-# kernelPackages = pkgs.linuxPackages_cachyos;
+		kernelPackages = pkgs.linuxPackages_cachyos;
+
 # Kernel parameters for Nvidia + Intel hybrid
 		kernelParams = [ "i915.force_probe=7d55" "nvidia_drm.modeset=1" "nvidia_drm.fbdev=1" ];
 		initrd.kernelModules = [ "i915" ];
+
+		consoleLogLevel = 2;
+		resumeDevice = lib.mkForce "/dev/disk/by-partlabel/disk-main-swap";
 	};
 
-	networking = {
-		hostName = "carbon";
-		networkmanager.enable = true;
-	};
+	networking.hostName = "carbon";
 
 	fileSystems = {
 		"/".device = lib.mkForce "/dev/disk/by-partlabel/disk-main-root";
@@ -61,6 +65,8 @@
 					 extraBuildFlags = [ "-O3" "-march=native" "-mtune=native" ];
 				 };
 			 };
+
+			 ffmpeg = prev.ffmpeg.override { stdenv = final.optimisedStdenv; };
 		 })
 	];
 
@@ -75,8 +81,6 @@
 	environment.systemPackages = with pkgs; [
 		git vim curl wget
 		pciutils usbutils
-		brightnessctl
-		sops age
 	];
 
 	programs.fish.enable = true;

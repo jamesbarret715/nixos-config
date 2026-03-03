@@ -6,7 +6,6 @@
 
 # Productivity
 		foot
-		neovim
 		obsidian
 		bitwarden-desktop
 
@@ -15,53 +14,38 @@
 		handbrake
 		blender
 
-# Dev tools
+# Devtools
+		arduino-cli
+		cargo
 		gcc
 		gnumake
 		nodejs
-		uv
-		python3
-		arduino-cli
-		avrdude
 		odin
-
-# Ollama with CUDA
-# (ollama.override { acceleration = "cuda"; })
+		python3
+		uv
 
 # CLI tools
-		github-cli
-		eza
 		bat
 		btop
-		ripgrep
+		eza
+		fzf
+		github-cli
 		just
-		rsync
-		unzip
-		unrar
 		p7zip
+		ripgrep
+		rsync
+		unrar
+		unzip
 
 # Wayland utils
 		wl-clipboard
-		wlr-randr
 		swaybg
 
 # Fonts
 		nerd-fonts.jetbrains-mono
 
 # System tools
-		pavucontrol
+		acpi
 		brightnessctl
-
-# Gaming
-		mangohud
-		wine
-		winetricks
-
-# Creative
-# Network
-		wget
-		curl
-		bind
-		meld
 	];
 }
