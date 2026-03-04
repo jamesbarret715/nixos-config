@@ -6,6 +6,7 @@
 		../../modules/bluetooth.nix 
 		../../modules/game.nix # Options/packages useful for gaming
 		../../modules/howdy.nix # Windows Hello facial recognition
+		../../modules/greetd.nix
 		../../modules/network.nix 
 		../../modules/pipewire.nix 
 		../../modules/plymouth.nix # Splash screen at boot

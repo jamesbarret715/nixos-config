@@ -1,8 +1,15 @@
-{ ... }: {
+{ pkgs, ... }: {
 # Enable plymouth
 	boot.plymouth = {
 		enable = true;
-		theme = "spinner";
+		theme = "spinner_alt";
+		logo = pkgs.runCommand "empty.png" {} "touch $out";
+
+		themePackages = with pkgs; [
+			(adi1090x-plymouth-themes.override {
+				selected_themes = [ "spinner_alt" ];
+			})
+		];
 	};
 
 # Additional boot params
