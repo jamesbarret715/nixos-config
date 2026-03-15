@@ -1,5 +1,6 @@
 { pkgs, inputs, dwl-src, ... }: {
 	imports = [
+		./modules/niri.nix
 		./modules/nvim.nix
 
 		./modules/packages.nix

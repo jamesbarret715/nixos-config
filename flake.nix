@@ -9,16 +9,16 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
-# Change nvim version to nightly
+# Nvim nightly version
 		neovim-nightly-overlay = {
 			url = "github:nix-community/neovim-nightly-overlay";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
-# Use my dwl build
-		dwl-src = {
-			url = "github:jamesbarret715/dwl";
-			flake = false;
+# Niri window manager
+		niri = {
+			url = "github:sodiboo/niri-flake";
+			inputs.nixpkgs.follows = "nixpkgs";
 		};
 	};
 
@@ -33,11 +33,14 @@
 
 				{
 					nixpkgs.overlays = [ neovim-nightly-overlay.overlays.default ];
+					
+					home-manager = {
+						useGlobalPkgs = true;
+						useUserPackages = true;
+						sharedModules = [ niri.homeModules.niri ];
 
-					home-manager.useGlobalPkgs = true;
-					home-manager.useUserPackages = true;
-					home-manager.extraSpecialArgs = { inherit inputs dwl-src; };
-					home-manager.users.james = import ./home/james;
+						users.james = import ./home/james;
+					};
 				}
 			];
 		};
