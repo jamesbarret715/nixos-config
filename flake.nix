@@ -22,7 +22,7 @@
 		};
 	};
 
-	outputs = { self, nixpkgs, home-manager, neovim-nightly-overlay, dwl-src, ... } @ inputs: {
+	outputs = { self, nixpkgs, home-manager, neovim-nightly-overlay, niri, ... } @ inputs: {
 		nixosConfigurations.carbon = nixpkgs.lib.nixosSystem {
 			system = "x86_64-linux";
 			specialArgs = { inherit inputs; };
