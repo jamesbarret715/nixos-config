@@ -2,6 +2,7 @@
 	imports = [
 		./modules/dwl.nix
 		./modules/nvim.nix
+		./modules/prismlauncher.nix
 
 		./modules/packages.nix
 	];

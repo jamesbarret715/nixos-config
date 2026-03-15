@@ -25,6 +25,20 @@
 		resumeDevice = lib.mkForce "/dev/disk/by-partlabel/disk-main-swap";
 	};
 
+# Battery & power management
+	powerManagement = {
+		enable = true;
+		powertop.enable = true;
+		cpuFreqGovernor = "ondemand";
+	};
+
+	services.tlp = {
+		enable = true;
+		settings = {
+			CPU_BOOST_ON_BAT = 0;
+		};
+	};
+
 # Manually specify filesystem locations based on partition label
 	fileSystems = {
 		"/".device = lib.mkForce "/dev/disk/by-partlabel/disk-main-root";

@@ -5,17 +5,23 @@
 		chromium
 
 # Productivity
+		bitwarden-desktop
+		ferdium
 		foot
 		obsidian
-		bitwarden-desktop
+		onlyoffice-desktopeditors
 
 # Media
-		mpv
-		handbrake
 		blender
+		handbrake
+		mpv
+		sabnzbd
 
-# Devtools
-		arduino-cli
+# Games
+		steam
+		prismlauncher
+
+# Dev tools
 		cargo
 		gcc
 		gnumake
@@ -29,6 +35,7 @@
 		btop
 		eza
 		fzf
+		gemini-cli-bin
 		github-cli
 		just
 		p7zip
@@ -41,11 +48,16 @@
 		wl-clipboard
 		swaybg
 
-# Fonts
-		nerd-fonts.jetbrains-mono
 
 # System tools
 		acpi
 		brightnessctl
+		libnotify
+		grim
+		slurp
+	
+# Misc.
+		librepods
+		nerd-fonts.jetbrains-mono
 	];
 }
