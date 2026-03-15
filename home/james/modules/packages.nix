@@ -46,15 +46,11 @@
 
 # Wayland utils
 		wl-clipboard
-		swaybg
 
 
 # System tools
 		acpi
-		brightnessctl
 		libnotify
-		grim
-		slurp
 	
 # Misc.
 		librepods

@@ -55,10 +55,12 @@
 		auto-optimise-store = true;
 		substituters = [
 			"https://cache.nixos.org"
+			"https://niri.cachix.org"
 			"https://nix-gaming.cachix.org"
 			"https://cuda-maintainers.cachix.org"
 		];
 		trusted-public-keys = [
+			"niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
 			"nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
 			"cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
 		];
