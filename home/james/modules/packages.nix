@@ -7,7 +7,6 @@
 # Productivity
 		bitwarden-desktop
 		ferdium
-		foot
 		obsidian
 		onlyoffice-desktopeditors
 
