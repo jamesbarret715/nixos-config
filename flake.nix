@@ -9,7 +9,13 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
-# Nvim nightly version
+# AWWW wayland wallpapers 
+		awww = {
+			url = "git+https://codeberg.org/LGFae/awww";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
+
+# Nvim nightly
 		neovim-nightly-overlay = {
 			url = "github:nix-community/neovim-nightly-overlay";
 			inputs.nixpkgs.follows = "nixpkgs";
@@ -22,7 +28,7 @@
 		};
 	};
 
-	outputs = { self, nixpkgs, home-manager, neovim-nightly-overlay, niri, ... } @ inputs: {
+	outputs = { self, nixpkgs, home-manager, awww, neovim-nightly-overlay, niri, ... } @ inputs: {
 		nixosConfigurations.carbon = nixpkgs.lib.nixosSystem {
 			system = "x86_64-linux";
 			specialArgs = { inherit inputs; };
@@ -35,9 +41,10 @@
 					nixpkgs.overlays = [ neovim-nightly-overlay.overlays.default ];
 					
 					home-manager = {
+						extraSpecialArgs = { inherit (inputs) awww; };
+						sharedModules = [ niri.homeModules.niri ];
 						useGlobalPkgs = true;
 						useUserPackages = true;
-						sharedModules = [ niri.homeModules.niri ];
 
 						users.james = import ./home/james;
 					};

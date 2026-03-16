@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, awww, ... }: {
 	home.packages = with pkgs; [
 # Browsers
 		librewolf
@@ -55,5 +55,6 @@
 # Misc.
 		librepods
 		nerd-fonts.jetbrains-mono
+
 	];
 }

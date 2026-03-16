@@ -1,8 +1,7 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, awww, ... }: {
 	programs.niri = {
 		enable = true;
 		settings = {
-# Config
 			input = {
 				touchpad = {
 					natural-scroll = true;
@@ -23,10 +22,14 @@
 					max-scroll-amount = "40%";
 				};
 
+# Replace caps with a ctrl key
 				keyboard = {
 					xkb.options = "ctrl:nocaps";
 				};
 			};
+
+# Disable hot corners
+			gestures.hot-corners.enable = false;
 
 			layout = {
 				gaps = 10;
@@ -40,20 +43,30 @@
 
 			prefer-no-csd = true;
 
-# Window rules
 			window-rules = [
+# Open menus as floats
 				{ matches = [{ app-id = "menu"; }]; open-floating = true; }
+# Open librewolf extension windows as floats
+				{ matches = [ { app-id = "^librewolf$"; title = "^Extension:"; } ]; open-floating = true; }
+			];
+
+			layer-rules = [
+# Show background in overview
+				{ matches = [{ namespace = "overview$"; }]; place-within-backdrop = true; }
 			];
 
 # Startup apps
 			spawn-at-startup = [
+				{ command = [ "xwayland-satellite" ]; }
 				{ command = [ "waybar" ]; }
-				{ command = [ "swaybg" "-i" "~/.wallpaper" ]; }
 				{ command = [ "foot" "--server" ]; }
+				{ command = [ "awww-daemon" ]; }
+				{ command = [ "awww-daemon" "-n" "overview" ]; }
 			];
 
 			binds = with config.lib.niri.actions; {
 				"Mod+Q" = { action = close-window; repeat = false; };
+				"Mod+O".action = toggle-overview;
 
 # Apps
 				"Mod+Return".action       = spawn "footclient";
@@ -110,7 +123,7 @@
 				position = "top";
 				height = 24;
 				modules-left = [ "niri/workspaces" ];
-				modules-right = [ "network" "custom/sep" "battery" "custom/sep" "clock" ];
+				modules-right = [ "network" "custom/sep" "backlight" "pulseaudio" "custom/sep" "battery" "custom/sep" "clock" ];
 
 				"niri/workspaces" = {
 					format = "{index}";
@@ -120,6 +133,20 @@
 					format-wifi = "󰤨 {essid}";
 					format-ethernet = "󰈀 {ifname}";
 					format-disconnected = "󰤭";
+				};
+
+				"backlight" = {
+					format = "{icon} {percent}%";
+					format-icons = [ "󰃞" "󰃟" "󰃠" ];
+				};
+
+				"pulseaudio" = {
+					format = "{icon} {volume}%";
+					format-muted = "󰝟 muted";
+					format-icons = {
+						default = [ "󰕿" "󰖀" "󰕾" ];
+					};
+					on-click = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
 				};
 
 				"battery" = {
@@ -165,16 +192,13 @@ window#waybar {
 	};
 
 # Other programs
-	programs.swaylock.enable = true;		# lock screen
-	services.mako.enable = true;			# notifications
-	services.polkit-gnome.enable = true;    # keyring
+	programs.swaylock.enable = true;			# lock screen
+	services.mako.enable = true;				# notifications
+	services.polkit-gnome.enable = true;    	# keyring
 
 	home.packages = with pkgs; [
-		swaybg			# wallpaper
-
-		grim 			# screenshots
-		slurp
-	
-		brightnessctl	# brightness
+		awww.packages.${pkgs.system}.default 	# wallpaper
+		brightnessctl							# brightness
+		xwayland-satellite						# X11
 	];
 }

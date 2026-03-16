@@ -102,6 +102,11 @@
 		rtkit.enable = true;
 		polkit.enable = true;
 		pam.services.login.enableGnomeKeyring = true;
+
+		sudo.extraConfig = ''
+			  Defaults timestamp_type=global
+			  Defaults timestamp_timeout=30
+		'';
 	};
 
 	system.stateVersion = "25.05";
