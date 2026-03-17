@@ -45,9 +45,23 @@
 
 			window-rules = [
 # Open menus as floats
-				{ matches = [{ app-id = "menu"; }]; open-floating = true; }
-# Open librewolf extension windows as floats
-				{ matches = [ { app-id = "^librewolf$"; title = "^Extension:"; } ]; open-floating = true; }
+				{
+					matches = [ 
+						{ app-id = "^menu"; } 
+						{ app-id = "^librewolf$"; title = "^Extension"; } 
+					]; 
+					open-floating = true; 
+				}
+
+# Open settings windows as small floats
+				{ 
+					matches = [ 
+						{ app-id = "blueman"; }
+					]; 
+
+					open-floating = true; 
+					default-window-height.fixed = 800; 
+				}
 			];
 
 			layer-rules = [
@@ -60,8 +74,11 @@
 				{ command = [ "xwayland-satellite" ]; }
 				{ command = [ "waybar" ]; }
 				{ command = [ "foot" "--server" ]; }
+# Wallpapers
 				{ command = [ "awww-daemon" ]; }
+				{ command = [ "awww" "img" "/home/james/Pictures/Wallpapers/cityscape.gif" ]; }
 				{ command = [ "awww-daemon" "-n" "overview" ]; }
+				{ command = [ "awww" "img" "-n" "overview" "/home/james/Pictures/Wallpapers/cityscape-blurred.gif" ]; }
 			];
 
 			binds = with config.lib.niri.actions; {
@@ -100,6 +117,7 @@
 				"Mod+Shift+R".action = switch-preset-window-height;
 				"Mod+Ctrl+R".action  = reset-window-height;
 				"Mod+F".action       = maximize-column;
+				"Mod+Shift+F".action = fullscreen-window;
 
 # Workspaces to numkeys
 			} // (builtins.foldl' (a: b: a // b) {} (builtins.genList (i:
@@ -167,38 +185,26 @@
 		};
 
 		style = ''
-* {
-	font-family: JetBrainsMono Nerd Font;
-	font-size: 14px;
-	border: none;
-	border-radius: 0;
-	padding: 0 4px;
-}
+			* {
+				border: none;
+				border-radius: 0;
+				padding: 0 4px;
+			}
 
-window#waybar {
-	background: rgba(38, 38, 38, 0.8);
-	color: #eeeeee;
-}
-
-#workspaces button {
-	color: #bbbbbb;
-	padding: 0 4px;
-}
-
-#workspaces button.active {
-	color: #ffffff;
-}
+			#workspaces button {
+				padding: 0 4px;
+			}
 		'';
 	};
 
 # Other programs
-	programs.swaylock.enable = true;			# lock screen
-	services.mako.enable = true;				# notifications
-	services.polkit-gnome.enable = true;    	# keyring
+	programs.swaylock.enable = true;		# lock screen
+	services.mako.enable = true;			# notifications
+	services.polkit-gnome.enable = true;	# keyring
 
 	home.packages = with pkgs; [
-		awww.packages.${pkgs.system}.default 	# wallpaper
-		brightnessctl							# brightness
-		xwayland-satellite						# X11
+		awww.packages.${pkgs.stdenv.hostPlatform.system}.default	# wallpaper
+		brightnessctl												# brightness
+		xwayland-satellite											# X11
 	];
 }

@@ -1,8 +1,10 @@
-{ pkgs, inputs, dwl-src, ... }: {
+{ pkgs, inputs, ... }: {
 	imports = [
 		./modules/foot.nix
+		./modules/librewolf.nix
 		./modules/niri.nix
 		./modules/nvim.nix
+		./modules/stylix.nix
 
 		./modules/packages.nix
 	];

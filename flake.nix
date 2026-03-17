@@ -15,9 +15,21 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
-# Nvim nightly
-		neovim-nightly-overlay = {
-			url = "github:nix-community/neovim-nightly-overlay";
+# Firefox extensions
+		firefox-addons = {
+			url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
+
+# Stylix theming 
+		stylix = {
+			url = "github:nix-community/stylix";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
+
+# Nixvim neovim with nix
+		nixvim = {
+			url = "github:nix-community/nixvim";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
@@ -28,7 +40,7 @@
 		};
 	};
 
-	outputs = { self, nixpkgs, home-manager, awww, neovim-nightly-overlay, niri, ... } @ inputs: {
+	outputs = { self, nixpkgs, home-manager, awww, firefox-addons, stylix, nixvim, niri, ... } @ inputs: {
 		nixosConfigurations.carbon = nixpkgs.lib.nixosSystem {
 			system = "x86_64-linux";
 			specialArgs = { inherit inputs; };
@@ -38,13 +50,18 @@
 				home-manager.nixosModules.home-manager
 
 				{
-					nixpkgs.overlays = [ neovim-nightly-overlay.overlays.default ];
-					
 					home-manager = {
-						extraSpecialArgs = { inherit (inputs) awww; };
-						sharedModules = [ niri.homeModules.niri ];
+						extraSpecialArgs = { inherit (inputs) awww firefox-addons; };
+						sharedModules = [ 
+							niri.homeModules.niri
+							stylix.homeModules.stylix 
+							nixvim.homeModules.nixvim
+						];
+
 						useGlobalPkgs = true;
 						useUserPackages = true;
+
+						backupFileExtension = "bak";
 
 						users.james = import ./home/james;
 					};

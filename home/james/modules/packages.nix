@@ -1,7 +1,6 @@
 { pkgs, awww, ... }: {
 	home.packages = with pkgs; [
 # Browsers
-		librewolf
 		chromium
 
 # Productivity
@@ -46,14 +45,11 @@
 # Wayland utils
 		wl-clipboard
 
-
 # System tools
 		acpi
 		libnotify
 	
 # Misc.
 		librepods
-		nerd-fonts.jetbrains-mono
-
 	];
 }
