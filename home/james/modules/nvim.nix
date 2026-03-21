@@ -4,6 +4,8 @@
 		defaultEditor = true;
 		viAlias = true;
 
+		colorschemes.tokyonight.enable = true;
+		colorscheme = "tokyonight-storm";
 
 		opts = {
 			hlsearch = false;
@@ -104,8 +106,6 @@
 			{ mode = "i"; key = "kj"; action = "<esc>"; }
 		];
 
-		colorschemes.tokyonight.enable = true;
-		colorscheme = "tokyonight-storm";
 	};
 
 	stylix.targets.neovim.enable = false;

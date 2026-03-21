@@ -6,6 +6,7 @@
 		./modules/nvim.nix
 		./modules/stylix.nix
 		./modules/picker.nix
+		./modules/prismlauncher.nix
 
 		./modules/packages.nix
 	];

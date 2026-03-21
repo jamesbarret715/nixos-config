@@ -104,14 +104,25 @@ in
 				# ignore-drm-device = "/dev/dri/card0";
 			};
 
-			binds = with config.lib.niri.actions; {
+			binds = with config.lib.niri.actions; let 
+				launcher-script = pkgs.writeShellScript "app-launcher" ''
+					target=$(mktemp) || exit 1
+					# trap "rm $target" EXIT
+
+					${pkgs.foot}/bin/footclient --app-id "menu" sh -c \
+						"${pkgs.television}/bin/tv applications > $target";
+					
+					exec "$(cat $target)"
+				'';
+
+			in {
 				"Mod+Q" 	   = { action = close-window; repeat = false; };
 				"Mod+O".action = toggle-overview;
 
 # Apps
 				"Mod+Return".action       = spawn "footclient";
 				"Mod+Shift+Return".action = spawn "librewolf";
-				"Mod+Space".action        = spawn "/home/james/.scripts/launcher";
+				"Mod+Space".action        = spawn "${launcher-script}";
 
 # System controls
 				"XF86AudioRaiseVolume".action  = spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%+";
