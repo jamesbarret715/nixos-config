@@ -4,19 +4,17 @@
 		defaultEditor = true;
 		viAlias = true;
 
-		colorschemes.tokyonight.enable = true;
-		colorscheme = "tokyonight-storm";
 
 		opts = {
+			hlsearch = false;
+			ignorecase = true;
 			number = true;
 			relativenumber = true;
 			shiftwidth = 4;
-			tabstop = 4;
-			undofile = true;
-			ignorecase = true;
 			smartindent = true;
+			tabstop = 4;
 			termguicolors = true;
-			signcolumn = "yes";
+			undofile = true;
 		};
 
 		globals.mapleader = " ";
@@ -105,6 +103,9 @@
 			{ mode = "i"; key = "jk"; action = "<esc>"; }
 			{ mode = "i"; key = "kj"; action = "<esc>"; }
 		];
+
+		colorschemes.tokyonight.enable = true;
+		colorscheme = "tokyonight-storm";
 	};
 
 	stylix.targets.neovim.enable = false;

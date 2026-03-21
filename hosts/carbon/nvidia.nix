@@ -39,9 +39,5 @@
 # Use Intel for display, Nvidia only on request
 		WLR_DRM_DEVICES = "/dev/dri/card1";   # Intel Arc is card1
 		LIBVA_DRIVER_NAME = "iHD";            # Intel VAAPI
-
-# Tell apps where to find Nvidia for offload
-		__NV_PRIME_RENDER_OFFLOAD = "1";
-		__VK_LAYER_NV_optimus = "NVIDIA_only";
 	};
-					   }
+}

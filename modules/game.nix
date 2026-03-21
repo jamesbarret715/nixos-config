@@ -3,7 +3,7 @@
 	programs.steam = {
 		enable = true;
 		remotePlay.openFirewall = true;
-		gamescopeSession.enable = false;
+		gamescopeSession.enable = true;
 		extraCompatPackages = [ pkgs.proton-ge-bin ];
 	};
 
@@ -12,8 +12,8 @@
 
 # Useful packages
 	environment.systemPackages = with pkgs; [
+		mangohud
 		wine
 		winetricks
-		mangohud
 	];
 }

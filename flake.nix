@@ -51,16 +51,14 @@
 
 				{
 					home-manager = {
-						extraSpecialArgs = { inherit (inputs) awww firefox-addons; };
+						extraSpecialArgs = { inherit (inputs) awww firefox-addons niri; };
 						sharedModules = [ 
 							niri.homeModules.niri
 							stylix.homeModules.stylix 
 							nixvim.homeModules.nixvim
 						];
 
-						useGlobalPkgs = true;
 						useUserPackages = true;
-
 						backupFileExtension = "bak";
 
 						users.james = import ./home/james;

@@ -1,7 +1,18 @@
-{ config, pkgs, awww, ... }: {
+{ config, pkgs, awww, niri, ... }: 
+let
+  # Debug: see if niri-unstable exists in pkgs
+  debug = builtins.trace "niri-unstable in pkgs? ${if pkgs ? niri-unstable then "YES" else "NO"}" null;
+  debug2 = builtins.trace "niri overlay applied? ${if pkgs ? niri then "YES" else "NO"}" null;
+in
+{
 	programs.niri = {
 		enable = true;
+		# package = pkgs.niri-stable;
+
 		settings = {
+			prefer-no-csd = true;
+			screenshot-path = null;
+
 			input = {
 				touchpad = {
 					natural-scroll = true;
@@ -28,6 +39,13 @@
 				};
 			};
 
+			outputs."eDP-1" = {
+				mode = { width = 2880; height = 1800; refresh = 120.0; };
+				variable-refresh-rate = "on-demand";
+				scale = 1.5;
+			};
+
+
 # Disable hot corners
 			gestures.hot-corners.enable = false;
 
@@ -41,7 +59,6 @@
 				};
 			};
 
-			prefer-no-csd = true;
 
 			window-rules = [
 # Open menus as floats
@@ -81,8 +98,14 @@
 				{ command = [ "awww" "img" "-n" "overview" "/home/james/Pictures/Wallpapers/cityscape-blurred.gif" ]; }
 			];
 
+			debug = {
+# Use only the iGPU
+				render-drm-device = "/dev/dri/card1";
+				# ignore-drm-device = "/dev/dri/card0";
+			};
+
 			binds = with config.lib.niri.actions; {
-				"Mod+Q" = { action = close-window; repeat = false; };
+				"Mod+Q" 	   = { action = close-window; repeat = false; };
 				"Mod+O".action = toggle-overview;
 
 # Apps
@@ -98,7 +121,9 @@
 				"XF86MonBrightnessDown".action = spawn "brightnessctl" "set" "5%-";
 
 # Screenshots
-				"Mod+Shift+S".action = spawn "grim -s $(slurp)";
+				"Mod+Shift+S".action.screenshot       = {};
+				"Mod+Ctrl+S".action.screenshot-window = {};
+				"Mod+Alt+S".action.screenshot-screen  = { show-pointer = false; };
 
 # Focus
 				"Mod+H".action = focus-column-left;
@@ -120,15 +145,15 @@
 				"Mod+Shift+F".action = fullscreen-window;
 
 # Workspaces to numkeys
-			} // (builtins.foldl' (a: b: a // b) {} (builtins.genList (i:
-				let n = toString (i + 1); in {
-					"Mod+${n}".action = focus-workspace (i + 1);
-				}
-			) 9));
+			} // (
+				builtins.foldl' (a: b: a // b) {} 
+					(builtins.genList (i:
+						let n = toString (i + 1); in {
+							"Mod+${n}".action = focus-workspace (i + 1);
+						}
+					) 9)
+			);
 
-			outputs."eDP-1" = {
-				scale = 1.5;
-			};
 		};
 	};
 

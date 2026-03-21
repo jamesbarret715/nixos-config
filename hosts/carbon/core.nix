@@ -71,7 +71,7 @@
 	users.users.james = {
 		isNormalUser = true;
 		extraGroups = [ "wheel" "networkmanager" "libvirtd" "docker" "video" "input" "render" ];
-		shell = pkgs.fish;
+		shell = pkgs.zsh;
 	};
 
 	environment.systemPackages = with pkgs; [
@@ -79,8 +79,8 @@
 		pciutils usbutils
 	];
 
-	programs.fish.enable = true;
-	programs.dconf.enable = true; # needed for virt-manager
+	programs.zsh.enable = true;
+	programs.dconf.enable = true;
 
 # XDG portals for Wayland
 	xdg.portal = {

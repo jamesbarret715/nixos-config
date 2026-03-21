@@ -1,4 +1,4 @@
-{ pkgs, awww, ... }: {
+{ pkgs, ... }: {
 	home.packages = with pkgs; [
 # Browsers
 		chromium
@@ -32,23 +32,22 @@
 		bat
 		btop
 		eza
+		file
 		fzf
 		gemini-cli-bin
 		github-cli
 		just
+		libnotify
 		p7zip
 		ripgrep
 		rsync
+		television
 		unrar
 		unzip
-
-# Wayland utils
 		wl-clipboard
+		yazi
+		zoxide
 
-# System tools
-		acpi
-		libnotify
-	
 # Misc.
 		librepods
 	];
