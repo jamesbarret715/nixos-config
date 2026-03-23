@@ -66,6 +66,12 @@
 		];
 	};
 
+	nix.gc = {
+		automatic = true;
+		dates = "weekly";
+		options = "--delete-older-than 2d";
+	};
+
 	nixpkgs.config.allowUnfree = true;
 
 	users.users.james = {

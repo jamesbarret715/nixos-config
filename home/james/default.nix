@@ -5,8 +5,8 @@
 		./modules/niri.nix
 		./modules/nvim.nix
 		./modules/stylix.nix
-		./modules/picker.nix
-		./modules/prismlauncher.nix
+		./modules/vicinae.nix
+		# ./modules/picker.nix
 
 		./modules/packages.nix
 	];
