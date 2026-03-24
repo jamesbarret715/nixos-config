@@ -1,13 +1,6 @@
-{ config, pkgs, awww, niri, ... }: 
-let
-  # Debug: see if niri-unstable exists in pkgs
-  debug = builtins.trace "niri-unstable in pkgs? ${if pkgs ? niri-unstable then "YES" else "NO"}" null;
-  debug2 = builtins.trace "niri overlay applied? ${if pkgs ? niri then "YES" else "NO"}" null;
-in
-{
+{ config, pkgs, awww, ... }: {
 	programs.niri = {
 		enable = true;
-		# package = pkgs.niri-stable;
 
 		settings = {
 			prefer-no-csd = true;
@@ -61,6 +54,13 @@ in
 
 
 			window-rules = [
+				{
+					geometry-corner-radius = let radius = 10.0; in {
+						top-left = radius; top-right = radius;
+						bottom-left = radius; bottom-right = radius;
+					};
+					clip-to-geometry = true;
+				}
 # Open menus as floats
 				{
 					matches = [ 
@@ -69,7 +69,6 @@ in
 					]; 
 					open-floating = true; 
 				}
-
 # Open settings windows as small floats
 				{ 
 					matches = [ 
@@ -91,6 +90,7 @@ in
 				{ command = [ "xwayland-satellite" ]; }
 				{ command = [ "waybar" ]; }
 				{ command = [ "foot" "--server" ]; }
+				{ command = [ "vicinae" "server" ]; }
 # Wallpapers
 				{ command = [ "awww-daemon" ]; }
 				{ command = [ "awww" "img" "/home/james/Pictures/Wallpapers/cityscape.gif" ]; }
@@ -101,28 +101,16 @@ in
 			debug = {
 # Use only the iGPU
 				render-drm-device = "/dev/dri/card1";
-				# ignore-drm-device = "/dev/dri/card0";
 			};
 
-			binds = with config.lib.niri.actions; let 
-				launcher-script = pkgs.writeShellScript "app-launcher" ''
-					target=$(mktemp) || exit 1
-					# trap "rm $target" EXIT
-
-					${pkgs.foot}/bin/footclient --app-id "menu" sh -c \
-						"${pkgs.television}/bin/tv applications > $target";
-					
-					exec "$(cat $target)"
-				'';
-
-			in {
+			binds = with config.lib.niri.actions; {
 				"Mod+Q" 	   = { action = close-window; repeat = false; };
 				"Mod+O".action = toggle-overview;
 
 # Apps
 				"Mod+Return".action       = spawn "footclient";
 				"Mod+Shift+Return".action = spawn "librewolf";
-				"Mod+Space".action        = spawn "${launcher-script}";
+				"Mod+Space".action        = spawn "vicinae" "toggle";
 
 # System controls
 				"XF86AudioRaiseVolume".action  = spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%+";
@@ -157,12 +145,11 @@ in
 
 # Workspaces to numkeys
 			} // (
-				builtins.foldl' (a: b: a // b) {} 
-					(builtins.genList (i:
-						let n = toString (i + 1); in {
-							"Mod+${n}".action = focus-workspace (i + 1);
-						}
-					) 9)
+				builtins.foldl' (a: b: a // b) {} (builtins.genList (i:
+					let n = toString (i + 1); in {
+						"Mod+${n}".action = focus-workspace (i + 1);
+					}
+				) 9)
 			);
 
 		};

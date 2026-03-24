@@ -108,5 +108,5 @@
 
 	};
 
-	stylix.targets.neovim.enable = false;
+	stylix.targets.nixvim.enable = false;
 }

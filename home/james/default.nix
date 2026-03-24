@@ -6,7 +6,7 @@
 		./modules/nvim.nix
 		./modules/stylix.nix
 		./modules/vicinae.nix
-		# ./modules/picker.nix
+		./modules/zsh.nix
 
 		./modules/packages.nix
 	];
