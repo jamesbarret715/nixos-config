@@ -1,0 +1,7 @@
+keys:
+  - &argon age1kgythcuvtvvs7h4mvalrw8rck4fqata0n2ft4t6rh4gne20regss6ve6nn
+creation_rules:
+  - path_regex: secrets/.*\.yaml$
+    key_groups:
+      - age:
+        - *argon
