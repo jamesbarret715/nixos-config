@@ -1,4 +1,4 @@
-{ config, pkgs, awww, ... }: {
+{ config, pkgs, inputs, ... }: {
 	programs.niri = {
 		enable = true;
 
@@ -66,6 +66,7 @@
 					matches = [ 
 						{ app-id = "^menu"; } 
 						{ app-id = "^librewolf$"; title = "^Extension"; } 
+						{ app-id = "^foot$";      title = "^Yazi"; }
 					]; 
 					open-floating = true; 
 				}
@@ -226,7 +227,7 @@
 	services.polkit-gnome.enable = true;	# keyring
 
 	home.packages = with pkgs; [
-		awww.packages.${pkgs.stdenv.hostPlatform.system}.default	# wallpaper
+		inputs.awww.packages.${pkgs.stdenv.hostPlatform.system}.default	# wallpaper
 		brightnessctl												# brightness
 		xwayland-satellite											# X11
 	];

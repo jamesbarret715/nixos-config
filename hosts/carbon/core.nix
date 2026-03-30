@@ -1,17 +1,11 @@
-{ lib, pkgs, inputs, ... }: {
+{ lib, pkgs, ... }: {
 	imports = [
 		./hardware-configuration.nix
 		./nvidia.nix
-
-		../../modules/bluetooth.nix 
-		../../modules/game.nix # Options/packages useful for gaming
-		../../modules/howdy.nix # Windows Hello facial recognition
-		../../modules/greetd.nix
-		../../modules/network.nix 
-		../../modules/pipewire.nix 
-		../../modules/plymouth.nix # Splash screen at boot
-		../../modules/virtualisation.nix # Options/packages useful for QEMU/KVM virtualisation
 	];
+
+	system.stateVersion = "25.11";
+	networking.hostName = "carbon";
 
 	boot = {
 		loader.systemd-boot.enable = true;
@@ -46,7 +40,6 @@
 	};
 
 # Basic system settings
-	networking.hostName = "carbon";
 	time.timeZone = "Europe/London";
 	i18n.defaultLocale = "en_GB.UTF-8";
 
@@ -76,7 +69,17 @@
 
 	users.users.james = {
 		isNormalUser = true;
-		extraGroups = [ "wheel" "networkmanager" "libvirtd" "docker" "video" "input" "render" ];
+
+		extraGroups = [
+			"docker"
+			"input" 
+			"libvirtd" 
+			"networkmanager" 
+			"render"
+			"video" 
+			"wheel" 
+		];
+
 		shell = pkgs.zsh;
 	};
 
@@ -115,5 +118,4 @@
 		'';
 	};
 
-	system.stateVersion = "25.05";
 }

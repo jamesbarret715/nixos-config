@@ -75,6 +75,7 @@
 				enable = true;
 				modules = {
 					ai = {};
+					align = {};
 					basics = {};
 					clue = {};
 					comment = {};
@@ -89,9 +90,11 @@
 			{ mode = "n"; key = "<leader>e"; action = "<cmd>Oil<CR>"; }
 			{ mode = "n"; key = "<leader>f"; action = "<cmd>Telescope find_files<CR>"; }
 			{ mode = "n"; key = "<leader>g"; action = "<cmd>Telescope live_grep<CR>"; }
+			{ mode = "n"; key = "<leader>h"; action = "<cmd>Telescope help_tags<CR>"; }
 
-# Copy to system clipboard
+# System clipboard
 			{ mode = [ "n" "x" ]; key = "<leader>y"; action = "\"+y"; }
+			{ mode = [ "n" "x" ]; key = "<leader>p"; action = "\"+p"; }
 
 # Centering scrolls
 			{ mode = "n"; key = "<C-d>"; action = "<C-d>zz"; }

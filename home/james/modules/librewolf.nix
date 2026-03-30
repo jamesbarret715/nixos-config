@@ -1,4 +1,4 @@
-{ pkgs, firefox-addons, ... }: let 
+{ pkgs, inputs, ... }: let 
 	system = pkgs.stdenv.hostPlatform.system;
 in {
 	programs.librewolf = {
@@ -28,7 +28,7 @@ in {
 			extensions = {
 				force = true;
 
-				packages = with firefox-addons.packages.${system}; [
+				packages = with inputs.firefox-addons.packages.${system}; [
 					ublock-origin
 					bitwarden
 					darkreader

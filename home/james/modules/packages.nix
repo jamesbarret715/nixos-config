@@ -5,6 +5,7 @@
 		ferdium
 		obsidian
 		onlyoffice-desktopeditors
+		zathura
 
 # Media
 		blender
@@ -38,7 +39,6 @@
 		unrar
 		unzip
 		wl-clipboard
-		yazi
 		zoxide
 
 # Misc.

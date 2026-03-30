@@ -17,8 +17,16 @@
 		PrivateDevices = false;
 	};
 
-# Enable libvirt KVM with QEMU
 	virtualisation = {
+		docker = {
+				enable = true;
+				rootless = {
+						enable = true;
+						setSocketVariable = true;
+					};
+			};
+
+# Enable libvirt KVM with QEMU
 		libvirtd = {
 			enable = true;
 

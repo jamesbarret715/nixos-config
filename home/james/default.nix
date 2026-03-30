@@ -1,4 +1,4 @@
-{ niri, ... }: {
+{ inputs, ... }: {
 	imports = [
 		./modules/foot.nix
 		./modules/librewolf.nix
@@ -6,6 +6,7 @@
 		./modules/nvim.nix
 		./modules/stylix.nix
 		./modules/vicinae.nix
+		./modules/yazi.nix
 		./modules/zsh.nix
 
 		./modules/packages.nix
@@ -17,8 +18,7 @@
 		stateVersion = "25.05";
 	};
 
-	nixpkgs.overlays = [ niri.overlays.niri ];
+	nixpkgs.overlays = [ inputs.niri.overlays.niri ];
 	nixpkgs.config.allowUnfree = true;
-
-	xdg.enable = true;
  }
+

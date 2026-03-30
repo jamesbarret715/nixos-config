@@ -4,67 +4,75 @@
 	inputs = {
 		nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-		home-manager = {
-			url = "github:nix-community/home-manager";
-			inputs.nixpkgs.follows = "nixpkgs";
+		awww = { # awww wayland wallpapers 
+			url = "git+https://codeberg.org/LGFae/awww"; 
+			inputs.nixpkgs.follows = "nixpkgs"; 
 		};
 
-# AWWW wayland wallpapers 
-		awww = {
-			url = "git+https://codeberg.org/LGFae/awww";
-			inputs.nixpkgs.follows = "nixpkgs";
+		firefox-addons = { # firefox extensions
+			url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons"; 
+			inputs.nixpkgs.follows = "nixpkgs"; 
 		};
 
-# Firefox extensions
-		firefox-addons = {
-			url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
-			inputs.nixpkgs.follows = "nixpkgs";
+		home-manager = { 
+			url = "github:nix-community/home-manager"; 
+			inputs.nixpkgs.follows = "nixpkgs"; 
 		};
 
-# Stylix theming 
-		stylix = {
-			url = "github:nix-community/stylix";
-			inputs.nixpkgs.follows = "nixpkgs";
+		niri = { # niri window manager 
+			url = "github:sodiboo/niri-flake"; 
+			inputs.nixpkgs.follows = "nixpkgs"; 
 		};
 
-# Nixvim neovim with nix
-		nixvim = {
-			url = "github:nix-community/nixvim";
-			inputs.nixpkgs.follows = "nixpkgs";
+		nixvim = { # nixvim neovim with nix 
+			url = "github:nix-community/nixvim"; 
+			inputs.nixpkgs.follows = "nixpkgs"; 
 		};
 
-# Niri window manager
-		niri = {
-			url = "github:sodiboo/niri-flake";
-			inputs.nixpkgs.follows = "nixpkgs";
+		sops-nix = { # secrets management 
+			url = "github:Mic92/sops-nix"; 
+			inputs.nixpkgs.follows = "nixpkgs"; 
+		};
+
+		stylix = { # stylix theming 
+			url = "github:nix-community/stylix"; 
+			inputs.nixpkgs.follows = "nixpkgs"; 
 		};
 	};
 
-	outputs = { self, nixpkgs, home-manager, awww, firefox-addons, stylix, nixvim, niri, ... } @ inputs: {
+	outputs = { self, nixpkgs, ... } @ inputs:  {
 		nixosConfigurations.carbon = nixpkgs.lib.nixosSystem {
 			system = "x86_64-linux";
 			specialArgs = { inherit inputs; };
-			modules = [
+			modules =  [
 				./hosts/carbon/core.nix
+				./hosts/carbon/home.nix
 
-				home-manager.nixosModules.home-manager
+				inputs.home-manager.nixosModules.home-manager
 
-				{
-					home-manager = {
-						extraSpecialArgs = { inherit (inputs) awww firefox-addons niri; };
-						sharedModules = [ 
-							niri.homeModules.niri
-							stylix.homeModules.stylix 
-							nixvim.homeModules.nixvim
-						];
+				./modules/bluetooth.nix 
+				./modules/game.nix # Options/packages useful for gaming
+				./modules/howdy.nix # Windows Hello facial recognition
+				./modules/greetd.nix
+				./modules/network.nix 
+				./modules/pipewire.nix 
+				./modules/plymouth.nix # Splash screen at boot
+				./modules/virtualisation.nix # Options/packages useful for QEMU/KVM virtualisation
+			];
+		};
 
-						useUserPackages = true;
-						backupFileExtension = "bak";
+		nixosConfigurations.argon = nixpkgs.lib.nixosSystem {
+			system = "x86_64-linux";
+			modules = [
+				./hosts/argon/core.nix
 
-						users.james = import ./home/james;
-					};
-				}
+				inputs.sops-nix.nixosModules.sops
+
+				./modules/caddy.nix
+				./modules/vaultwarden.nix
 			];
 		};
 	};
 }
+
+
