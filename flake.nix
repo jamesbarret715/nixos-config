@@ -29,8 +29,8 @@
 			inputs.nixpkgs.follows = "nixpkgs"; 
 		};
 
-		sops-nix = { # secrets management 
-			url = "github:Mic92/sops-nix"; 
+		agenix = { # secrets management 
+			url = "github:ryantm/agenix"; 
 			inputs.nixpkgs.follows = "nixpkgs"; 
 		};
 
@@ -48,6 +48,7 @@
 				./hosts/carbon/core.nix
 				./hosts/carbon/home.nix
 
+				inputs.agenix.nixosModules.default
 				inputs.home-manager.nixosModules.home-manager
 
 				./modules/bluetooth.nix 
@@ -66,7 +67,7 @@
 			modules = [
 				./hosts/argon/core.nix
 
-				inputs.sops-nix.nixosModules.sops
+				inputs.agenix.nixosModules.default
 
 				./modules/caddy.nix
 				./modules/vaultwarden.nix

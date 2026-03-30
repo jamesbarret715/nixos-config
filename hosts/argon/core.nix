@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }: {
+{ config, pkgs, lib, ... }: {
 	imports = [
 		./hardware-configuration.nix
 	];
@@ -42,7 +42,7 @@
 		isNormalUser = true;
 		extraGroups = [ "wheel" ];
 		openssh.authorizedKeys.keys = [
-			"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMj1LWPax+WAtOGubXR+VV9kcBhUwsgFuufaMY63a2yM"
+			"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICGTXRLWM/G+JzpFxlxa39Lt1touZvTFYp5mENysbb23"
 		];
 	};
 
@@ -65,11 +65,10 @@
 		allowedTCPPorts = [ 22 80 443 ];
 	};
 
-	nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-# SOPS
-	sops = {
-		defaultSopsFile = ../../secrets/secrets.yaml;
-		age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+	nix.settings = {
+		trusted-users = [ "admin" ];
+		experimental-features = [ "nix-command" "flakes" ];
 	};
+
+	config.age.identityPaths = [ "/home/admin/.ssh/id_ed25519_argon" ];
 }

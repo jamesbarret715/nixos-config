@@ -1,10 +1,7 @@
 { config, ... }: let 
 	local-port = 8222;
 in {
-	sops.secrets.vaultwarden_admin_token = {
-		owner = "vaultwarden";
-		group = "vaultwarden";
-	};
+	config.age.secrets.vaultwarden.file = ../secrets/vaultwarden.age;
 
 	services.vaultwarden = {
 		enable = true;
@@ -14,7 +11,7 @@ in {
 			ROCKET_PORT = local-port;
 			ROCKET_ADDRESS = "127.0.0.1";
 		};
-		environmentFile = config.sops.secrets.vaultwarden_admin_token.path;
+		environmentFile = config.age.secrets.vaultwarden.path;
 	};
 
 	services.caddy.virtualHosts = {
