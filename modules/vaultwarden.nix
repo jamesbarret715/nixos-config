@@ -1,7 +1,7 @@
 { config, ... }: let 
 	local-port = 8222;
 in {
-	config.age.secrets.vaultwarden.file = ../secrets/vaultwarden.age;
+	age.secrets.vaultwarden.file = ../secrets/vaultwarden.age;
 
 	services.vaultwarden = {
 		enable = true;
@@ -16,8 +16,9 @@ in {
 
 	services.caddy.virtualHosts = {
 		"vaultwarden.jamesbarret.co.uk".extraConfig = ''
-			redir https://vault.jamesbarret.co.uk{uri} permanent
+			reverse_proxy localhost:${toString local-port}
 		'';
+			# redir https://vault.jamesbarret.co.uk{uri} permanent
 
 		"vault.jamesbarret.co.uk".extraConfig = ''
 			reverse_proxy localhost:${toString local-port}

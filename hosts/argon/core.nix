@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }: {
+{ pkgs, lib, ... }: {
 	imports = [
 		./hardware-configuration.nix
 	];
@@ -70,5 +70,5 @@
 		experimental-features = [ "nix-command" "flakes" ];
 	};
 
-	config.age.identityPaths = [ "/home/admin/.ssh/id_ed25519_argon" ];
+	age.identityPaths = [ "/home/admin/.ssh/id_ed25519_argon" ];
 }
