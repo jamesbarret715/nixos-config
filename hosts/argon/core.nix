@@ -1,19 +1,30 @@
 { pkgs, lib, ... }: {
+	imports = [
+		./hardware-configuration.nix
+	];
+
 	system.stateVersion = "25.11";
 	networking.hostName = "argon";
 
-# Use grub2 as a bootloader
 	boot = {
 		kernelParams = [ "root=/dev/sda2" "console=ttyS0,115200n8" ];
 
 		loader.grub = {
 			enable = true;
-			devices = lib.mkForce [ "/dev/sda" ];
+			devices = lib.mkForce [ "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0" ];
 		};
 	};
 
 # Basic networking
-	networking.useDHCP = true;
+	networking = {
+		useDHCP = true;
+		defaultGateway = "31.97.59.254";
+		nameservers = [ "8.8.8.8" "1.1.1.1" ];
+		interfaces.ens18.ipv4.addresses = [{
+			address = "31.97.59.153";
+			prefixLength = 24;
+		}];
+	};
 
 	time.timeZone = "Europe/London";
 	i18n.defaultLocale = "en_GB.UTF-8";
