@@ -15,6 +15,8 @@ in {
 	};
 
 	services.caddy.virtualHosts."vault.jamesbarret.co.uk".extraConfig = ''
+		tls { dns cloudflare {env.CLOUDFLARE_API_TOKEN} }
+
 		reverse_proxy localhost:${toString local-port}
 	'';
  }

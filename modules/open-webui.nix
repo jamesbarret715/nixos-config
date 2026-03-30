@@ -14,6 +14,8 @@ in {
 	};
 
 	services.caddy.virtualHosts."openwebui.jamesbarret.co.uk".extraConfig = ''
+		tls { dns cloudflare {env.CLOUDFLARE_API_TOKEN} }
+
 		reverse_proxy localhost:${toString local-port}
 	'';
 }
