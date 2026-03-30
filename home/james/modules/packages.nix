@@ -10,6 +10,7 @@
 # Media
 		blender
 		handbrake
+		reaper
 		mpv
 		sabnzbd
 

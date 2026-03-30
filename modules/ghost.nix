@@ -1,10 +1,10 @@
 { ... }: {
-	systemd.tempfiles.rules = [
+	systemd.tmpfiles.rules = [
 		"d /var/lib/ghost/content 0755 root root"
 	];
 
 	virtualisation = {
-		podman.enabled = true;
+		podman.enable = true;
 
 		oci-containers = {
 			backend = "podman";
@@ -26,7 +26,7 @@
 	};
 
 	services.caddy.virtualHosts."jamesbarret.co.uk".extraConfig = ''
-		tls { dns cloudflare {env.CLOUDFLARE_API_KEY} }
+		tls { dns cloudflare {env.CLOUDFLARE_API_TOKEN} }
 
 		reverse_proxy localhost:2368
 	'';
