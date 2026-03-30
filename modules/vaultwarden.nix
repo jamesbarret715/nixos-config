@@ -14,13 +14,7 @@ in {
 		environmentFile = config.age.secrets.vaultwarden.path;
 	};
 
-	services.caddy.virtualHosts = {
-		"vaultwarden.jamesbarret.co.uk".extraConfig = ''
-			redir https://vault.jamesbarret.co.uk{uri} permanent
-		'';
-
-		"vault.jamesbarret.co.uk".extraConfig = ''
-			reverse_proxy localhost:${toString local-port}
-		'';
-	};
+	services.caddy.virtualHosts."vault.jamesbarret.co.uk".extraConfig = ''
+		reverse_proxy localhost:${toString local-port}
+	'';
  }

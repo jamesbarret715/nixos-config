@@ -70,5 +70,7 @@
 		experimental-features = [ "nix-command" "flakes" ];
 	};
 
+	nixpkgs.config.allowUnfree = true;
+
 	age.identityPaths = [ "/home/admin/.ssh/id_ed25519_argon" ];
 }

@@ -44,28 +44,5 @@
 # Misc.
 		chromium
 		librepods
-
-		(prismlauncher.override {
-			additionalLibs = [
-				nss
-				nspr
-				atk
-				at-spi2-atk
-				libdrm
-				mesa
-				libgbm
-				expat
-				libX11
-				libXcomposite
-				libXdamage
-				libXext
-				libXfixes
-				libXrandr
-				pango
-				cairo
-				alsa-lib
-				glib
-			];
-		})
 	];
 }

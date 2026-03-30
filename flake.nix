@@ -70,6 +70,7 @@
 				inputs.agenix.nixosModules.default
 
 				./modules/caddy.nix
+				./modules/open-webui.nix
 				./modules/vaultwarden.nix
 			];
 		};
