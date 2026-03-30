@@ -11,7 +11,7 @@
 		environmentFile = config.age.secrets.cloudflare.path;
 
 		extraConfig = ''
-			tls {
+			{
 				email jamesbarret715@gmail.com
 				acme_dns cloudflare {env.CLOUDFLARE_API_TOKEN}
 			}
