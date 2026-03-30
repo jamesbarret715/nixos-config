@@ -16,9 +16,8 @@ in {
 
 	services.caddy.virtualHosts = {
 		"vaultwarden.jamesbarret.co.uk".extraConfig = ''
-			reverse_proxy localhost:${toString local-port}
+			redir https://vault.jamesbarret.co.uk{uri} permanent
 		'';
-			# redir https://vault.jamesbarret.co.uk{uri} permanent
 
 		"vault.jamesbarret.co.uk".extraConfig = ''
 			reverse_proxy localhost:${toString local-port}
