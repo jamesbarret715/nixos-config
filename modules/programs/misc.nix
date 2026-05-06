@@ -18,9 +18,9 @@
 	flake.modules.homeManager.misc = { pkgs, ... }: {
 		home.packages = with pkgs; [
 			# multimedia
+			mpv
 			pwvucontrol
 			spotify
-			mpv
 			
 			# desktop utils
 			libnotify
