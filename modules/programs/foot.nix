@@ -1,8 +1,11 @@
-{ self, ... }: {
+{ lib, ... }: {
 	flake.modules.homeManager.foot = { config, ... }: {
 		programs.foot = { 
 			enable = true;
-			settings.main.pad = "10x10 center";
+			settings = {
+				main.pad = "10x10 center";
+				colors-dark.alpha = lib.mkForce 1.0;
+			};
 		};
 	
 		programs.niri.settings = with config.lib.niri; {
