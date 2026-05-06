@@ -6,11 +6,12 @@
 			nvtopPackages.full
 			
 			# cli utils
+			curl
+			github-cli
+			rsync
 			tree
 			unzip
-			rsync
 			wget
-			curl
 		];
 	};
 
@@ -28,6 +29,7 @@
 			
 			# productivity
 			bitwarden-desktop
+			ferdium
 			obsidian
 		];
 	};
