@@ -5,6 +5,7 @@
 
 			core
 			laptop
+			gaming
 
 			{ home-manager.sharedModules = [
 				self.modules.homeManager.carbon-display 
