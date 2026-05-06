@@ -1,5 +1,6 @@
-{
+{ ... }: {
 	flake.modules.nixos.core = { lib, pkgs, ... }: {
+
 # boot
 		boot.loader = {
 			systemd-boot.enable = lib.mkDefault true;
