@@ -13,10 +13,12 @@
 		services.tumbler.enable = true; # thumbnails
 	};
 
-	flake.modules.homeManager.thunar = { ... }: {
+	flake.modules.homeManager.thunar = { config, ... }: {
 		# xdg-utils will use thunar
 		xdg.mimeApps.defaultApplications = {
 			"inode/directory" = "thunar.desktop";
 		};
+
+		programs.niri.settings.binds."Mod+E".action = config.lib.niri.actions.spawn "thunar";
 	};
 }

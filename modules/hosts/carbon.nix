@@ -5,6 +5,10 @@
 
 			core
 			laptop
+
+			{ home-manager.sharedModules = [
+				self.modules.homeManager.carbon-display 
+			]; }
 		];
 	};
 
@@ -67,5 +71,16 @@
 			package = pkgs.ananicy-cpp;
 		};
 		services.irqbalance.enable = true;
+	};
+
+	flake.modules.homeManager.carbon-display = {
+# get niri to use the built-in display nicely
+		programs.niri.settings.outputs."eDP-1" = {
+			enable = true;
+			mode = { width = 2880; height = 1800; refresh = 120.0; };
+			position = { x = 0; y = 1080; };
+			variable-refresh-rate = true;
+			scale = 1.5;
+		};
 	};
 }

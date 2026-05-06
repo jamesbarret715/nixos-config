@@ -6,7 +6,12 @@
 
 	flake.modules.nixos.niri = { pkgs, ... }: {
 		imports = [ inputs.niri.nixosModules.niri ];
-		programs.niri.enable = true;
+		nixpkgs.overlays = [ inputs.niri.overlays.niri ];
+
+		programs.niri = {
+			enable = true;
+			package = lib.mkForce pkgs.niri-unstable;
+		};
 
 		home-manager = {
 			users.james.imports = with self.modules.homeManager; [ 
@@ -17,10 +22,6 @@
 			];
 		};
 
-# use latest niri version
-		nixpkgs.overlays = [ inputs.niri.overlays.niri ];
-		# programs.niri.package = lib.mkForce pkgs.niri-unstable;
-
 # launch on login
 		programs.zsh.interactiveShellInit = ''
 			if [[ -z "$WAYLAND_DISPLAY" && "$XDG_VTNR" == 1 ]]; then 
@@ -30,12 +31,11 @@
 	};
 
 	flake.modules.homeManager.niri = { config, pkgs, inputs, ... }: {
-		nixpkgs.overlays = [ inputs.niri.overlays.niri ];
-
 		home.packages = with pkgs; [
 			brightnessctl
 			wireplumber
 		];
+
 # niri config
 		programs.niri = {
 			settings = {
@@ -63,24 +63,8 @@
 						max-scroll-amount = "40%";
 					};
 
-# replace caps with a ctrl key
-					keyboard = {
-						xkb.options = "ctrl:nocaps";
-					};
+					keyboard.xkb.options = "ctrl:nocaps"; # replace caps with a ctrl key
 				};
-
-				outputs = {
-					"eDP-1" = {
-						enable = true;
-						mode = { width = 2880; height = 1800; refresh = 120.0; };
-						position = { x = 0; y = 1080; };
-						variable-refresh-rate = true;
-						scale = 1.5;
-					};
-				};
-
-# disable hot corners
-				gestures.hot-corners.enable = false;
 
 				layout = {
 					gaps = 10;
@@ -92,14 +76,13 @@
 					};
 				};
 
-
 				window-rules = [
 					{
+						clip-to-geometry = true;
 						geometry-corner-radius = let radius = 10.0; in {
 							top-left = radius; top-right = radius;
 							bottom-left = radius; bottom-right = radius;
 						};
-						clip-to-geometry = true;
 					}
 				];
 
