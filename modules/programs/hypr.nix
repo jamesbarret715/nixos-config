@@ -23,11 +23,11 @@
 
 				listener = [
 					{
-						timeout = 300; # 5min
+						timeout = 300; # 5m
 						on-timeout = "loginctl lock-session";
 					}
 					{
-						timeout = 330; # 5.5min
+						timeout = 330; # 5m30s
 						on-timeout = "niri msg action power-off-monitors";
 						on-resume = "niri msg action power-on-monitors";
 					}
@@ -36,9 +36,6 @@
 		};
 
 		home.packages = [ pkgs.hyprpolkitagent ];
-
-		programs.niri.settings.spawn-at-startup = [
-			{ sh = "hyprpolkitagent"; }
-		];
+		programs.niri.settings.spawn-at-startup = [ { sh = "hyprpolkitagent"; } ];
 	};
 }
