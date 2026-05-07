@@ -107,7 +107,7 @@
 					"XF86MonBrightnessUp".action   = spawn "brightnessctl" "set" "5%+";
 					"XF86MonBrightnessDown".action = spawn "brightnessctl" "set" "5%-";
 
-					"Mod+Shift+L" = { action = spawn "loginctl lock-session"; allow-when-locked = true; }
+					"Mod+Shift+L" = { action = spawn "loginctl" "lock-session"; allow-when-locked = true; };
 
 # screenshots
 					"Mod+Shift+S".action.screenshot       = {};
