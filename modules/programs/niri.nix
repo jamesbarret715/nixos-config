@@ -34,6 +34,7 @@
 		home.packages = with pkgs; [
 			brightnessctl
 			wireplumber
+			xwayland-satellite
 		];
 
 # niri config
@@ -105,6 +106,8 @@
 					"XF86AudioMute".action         = spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle";
 					"XF86MonBrightnessUp".action   = spawn "brightnessctl" "set" "5%+";
 					"XF86MonBrightnessDown".action = spawn "brightnessctl" "set" "5%-";
+
+					"Mod+Shift+L" = { action = spawn "loginctl lock-session"; allow-when-locked = true; }
 
 # screenshots
 					"Mod+Shift+S".action.screenshot       = {};
