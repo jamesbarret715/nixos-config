@@ -39,7 +39,9 @@
 
 # niri config
 		programs.niri = {
-			settings = {
+			settings = let 
+				colors = config.lib.stylix.colors;
+			in {
 				hotkey-overlay.skip-at-startup = true;
 				prefer-no-csd = true;
 				screenshot-path = null;
@@ -68,28 +70,40 @@
 				};
 
 				layout = {
-					gaps = 10;
+					gaps = 6;
+					focus-ring.enable = false;
+					background-color = "transparent";
 
-					focus-ring = {
+					border = {
+						enable = true;
 						width = 2;
-						active.color = "#aaaaaa";
-						inactive.color = "#444444";
+						active.color = colors.base05;   # colors: fg
+						inactive.color = colors.base02; # colors: bg3
 					};
 				};
 
 				window-rules = [
-					{
+					{ # all windows
 						clip-to-geometry = true;
 						geometry-corner-radius = let radius = 10.0; in {
 							top-left = radius; top-right = radius;
 							bottom-left = radius; bottom-right = radius;
 						};
 					}
+					{ # chromium pip floats
+						matches = [{ title = "^Picture-in-picture$"; }];
+						open-floating = true;
+					}
+					{ # show shared windows as "recording"
+						matches = [{ is-window-cast-target = true; }];
+						border.active.color = colors.base09; # colors: orange
+						border.inactive.color = colors.base08; # colors: red
+					}
 				];
 
 				layer-rules = [
 # show background in overview
-				{ matches = [{ namespace = "overview$"; }]; place-within-backdrop = true; }
+					{ matches = [{ namespace = "^wallpaper$"; }]; place-within-backdrop = true; }
 				];
 
 				spawn-at-startup = [
@@ -135,6 +149,7 @@
 					"Mod+Ctrl+R".action  = reset-window-height;
 					"Mod+F".action       = maximize-column;
 					"Mod+Shift+F".action = fullscreen-window;
+					"Mod+X".action 	     = expand-column-to-available-width;
 
 # workspaces to numkeys
 				} // (builtins.foldl' (a: b: a // b) {} (builtins.genList (i:
