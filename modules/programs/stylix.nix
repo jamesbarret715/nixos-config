@@ -9,6 +9,7 @@
 			sharedModules = [ inputs.stylix.homeModules.stylix ];
 			users.james.imports = [ self.modules.homeManager.stylix ];
 		};
+
 	};
 
 	flake.modules.homeManager.stylix = { pkgs, ... }: {
@@ -16,11 +17,9 @@
 			enable = true;
 			base16Scheme = "${pkgs.base16-schemes}/share/themes/everforest.yaml";
 
-			opacity.terminal = 0.9;
-
 			cursor = {
 				package = pkgs.posy-cursors;
-				name = "Posy_Cursor";
+				name = "Posy_Cursor_Black";
 				size = 24;
 			};
 
