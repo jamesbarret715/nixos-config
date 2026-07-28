@@ -10,6 +10,8 @@
         kernelModules = [ "kvm-intel" ];
         
         supportedFilesystems = [ "zfs" ]; # root-on-zfs support
+
+		consoleLogLevel = 2;
         
         kernelParams = [
             "i915.enable_fbc=1" # framebuffer compression
@@ -24,7 +26,8 @@
 
 # bootloader
     boot.loader = {
-        systemd-boot.enable = true;
+        limine.enable = true;
+		
         efi = {
             canTouchEfiVariables = true;
             efiSysMountPoint = "/boot/efi";
@@ -137,14 +140,6 @@
         '';
     };
 
-# facial recognition
-	services.howdy = {
-		enable = true;
-		control = "sufficient";
-	};
-
-	services.linux-enable-ir-emitter.enable = true;
-	security.pam.howdy.enable = true;
 
 # system 
     fonts.enableDefaultPackages = true;
