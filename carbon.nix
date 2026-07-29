@@ -6,7 +6,6 @@
 # kernel
     boot = {
         initrd.availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "usbhid" "usb_storage" "sd_mod" ];
-        initrd.kernelModules = [ ];
         kernelModules = [ "kvm-intel" ];
         
         supportedFilesystems = [ "zfs" ]; # root-on-zfs support
@@ -26,7 +25,14 @@
 
 # bootloader
     boot.loader = {
-        limine.enable = true;
+        limine = {
+			enable = true;
+			enableEditor = true;
+
+			extraConfig = ''
+				timeout: 2
+			'';
+		};
 		
         efi = {
             canTouchEfiVariables = true;
@@ -104,7 +110,9 @@
                 enable = true;
                 enableOffloadCmd = true;
             };
-            # bus IDs for prime offload
+
+			reverseSync.enable = true;
+
             intelBusId = "PCI:0:2:0";
             nvidiaBusId = "PCI:1:0:0";
         };

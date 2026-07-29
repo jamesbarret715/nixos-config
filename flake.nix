@@ -30,6 +30,7 @@
 				inputs.home-manager.nixosModules.home-manager
 
 				./carbon.nix ./computer.nix 
+				./virtualmachine.nix
 			];
         };
     };

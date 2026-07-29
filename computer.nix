@@ -1,6 +1,4 @@
-{ config, inputs, pkgs, ... }: let 
-	system = config.stdenv.hostPlatform.system;
-in {
+{ config, inputs, lib, pkgs, ... }: {
 # user 
     users.users.james = {
         isNormalUser = true;
@@ -14,6 +12,9 @@ in {
     services.displayManager.plasma-login-manager.enable = true;
     services.desktopManager.plasma6.enable = true;
 
+	# NOTE: KWIN_RENDER_NODES has been merged into kwin. as of 6.7.3, it is not available in a release build
+	environment.sessionVariables.KWIN_RENDER_NODES = "/dev/dri/renderD128";
+
 # applications 
 	environment.systemPackages = with pkgs; [
 		# cli utils
@@ -25,7 +26,7 @@ in {
 		pciutils usbutils
 
 		# desktop software
-		inputs.helium.packages.${system}.default
+		inputs.helium.packages.${stdenv.hostPlatform.system}.default
 		mangohud
 		mpv
 		prismlauncher
@@ -70,10 +71,6 @@ in {
 			name = "Posy_Cursor_Black";
 			size = 24;
 		};
-
-		targets = {
-			qt.platform = lib.mkForce "qtct"; # note: satisfies warning about unsupported QT platform. investigate in future
-		};
 	};
 
 # home manager
@@ -90,7 +87,10 @@ in {
 			homeDirectory = "/home/james";
 			stateVersion = "26.05";
 
-			pointerCursor.enable = true;
+			pointerCursor = {
+				enable = true;
+				gtk.enable = true;
+			};
 		};
 
 		nixpkgs.config.allowUnfree = true;
