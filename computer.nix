@@ -13,7 +13,12 @@
     services.desktopManager.plasma6.enable = true;
 
 	# NOTE: KWIN_RENDER_NODES has been merged into kwin. as of 6.7.3, it is not available in a release build
-	environment.sessionVariables.KWIN_RENDER_NODES = "/dev/dri/renderD128";
+	environment.sessionVariables = {
+		KWIN_RENDER_NODES = "/dev/dri/renderD128";
+		KWIN_DRM_DEVICES = "/dev/dri/card1:/dev/dri/card0";
+		KWIN_DRM_ALLOW_INTEL_COLORSPACE = "1";
+		KWIN_DRM_ALLOW_NVIDIA_COLORSPACE = "1";
+	};
 
 # applications 
 	environment.systemPackages = with pkgs; [

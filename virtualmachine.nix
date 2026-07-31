@@ -26,7 +26,7 @@
 				swtpm.enable = true; # enable TPM emulation
 			};
 
-			hooks.qemu."windows-gpu" = ./scripts/windows-gpu.sh;
+			# hooks.qemu."windows-gpu" = ./scripts/windows-gpu.sh;
 		};
 
 		spiceUSBRedirection.enable = true;

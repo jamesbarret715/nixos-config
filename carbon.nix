@@ -13,10 +13,13 @@
 		consoleLogLevel = 2;
         
         kernelParams = [
-            "i915.enable_fbc=1" # framebuffer compression
-            "i915.enable_guc=3" # graphics microcode (guC/huC)
             "nvidia_drm.fbdev=1"
             "nvidia_drm.modeset=1"
+
+			# use the newer `xe` driver for the iGPU
+			"i915.force_probe=!7d55"
+			"xe.force_probe=7d55"
+
             "quiet"
             "udev.log_level=2"
             "systemd.show_status=auto"
